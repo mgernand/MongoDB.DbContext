@@ -10,11 +10,11 @@
 		}
 
 		/// <inheritdoc />
-		protected override void OnConfiguring(MongoDbContextOptionsBuilder optionsBuilder)
+		protected override void OnConfiguring(MongoDbContextOptionsBuilder builder)
 		{
-			optionsBuilder.UseDatabase("mongodb://localhost:27017", "test-1");
+			builder.UseDatabase("mongodb://localhost:27017", "test-1");
 
-			base.OnConfiguring(optionsBuilder);
+			base.OnConfiguring(builder);
 		}
 	}
 }

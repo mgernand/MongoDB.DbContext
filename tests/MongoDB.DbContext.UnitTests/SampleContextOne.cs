@@ -1,10 +1,10 @@
-﻿namespace SampleApp
+﻿namespace MongoDB.DbContext.UnitTests
 {
 	using MadEyeMatt.MongoDB.DbContext;
 
-	public class SampleContextTwo : MongoDbContext
+	public class SampleContextOne : MongoDbContext
 	{
-		public SampleContextTwo(MongoDbContextOptions<SampleContextTwo> options)
+		public SampleContextOne(MongoDbContextOptions options)
 			: base(options)
 		{
 		}
@@ -12,6 +12,8 @@
 		/// <inheritdoc />
 		protected override void OnConfiguring(MongoDbContextOptionsBuilder builder)
 		{
+			builder.UseDatabase("mongodb://localhost:27017", "test-1");
+
 			base.OnConfiguring(builder);
 		}
 	}

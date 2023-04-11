@@ -169,8 +169,8 @@ namespace MadEyeMatt.MongoDB.DbContext
 		///         <see cref="OnConfiguring(MongoDbContextOptionsBuilder)" />.
 		///     </para>
 		/// </remarks>
-		/// <param name="optionsBuilder">A builder used modify the options for this context.</param>
-		protected internal virtual void OnConfiguring(MongoDbContextOptionsBuilder optionsBuilder)
+		/// <param name="builder">A builder used modify the options for this context.</param>
+		protected internal virtual void OnConfiguring(MongoDbContextOptionsBuilder builder)
 		{
 		}
 	}

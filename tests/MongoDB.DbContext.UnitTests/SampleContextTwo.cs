@@ -1,10 +1,10 @@
-﻿namespace SampleApp
+﻿namespace MongoDB.DbContext.UnitTests
 {
 	using MadEyeMatt.MongoDB.DbContext;
 
 	public class SampleContextTwo : MongoDbContext
 	{
-		public SampleContextTwo(MongoDbContextOptions<SampleContextTwo> options)
+		public SampleContextTwo(MongoDbContextOptions options)
 			: base(options)
 		{
 		}
