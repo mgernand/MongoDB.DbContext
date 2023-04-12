@@ -6,6 +6,7 @@ namespace MadEyeMatt.MongoDB.DbContext
 	using System.Threading;
 	using System.Threading.Tasks;
 	using global::MongoDB.Driver;
+	using global::MongoDB.Driver.Linq;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 
@@ -53,7 +54,7 @@ namespace MadEyeMatt.MongoDB.DbContext
 			{
 				if(this.initializing)
 				{
-					throw new InvalidOperationException("An attempt was made to use the context instance while it is being configured. A DbContext instance cannot be used inside 'OnConfiguring' since it is still being configured at this point. This can happen if a second operation is started on this context instance before a previous operation completed. Any instance members are not guaranteed to be thread safe.");
+					throw new InvalidOperationException("An attempt was made to use the context instance while it is being configured. A MongoDbContext instance cannot be used inside 'OnConfiguring' since it is still being configured at this point. This can happen if a second operation is started on this context instance before a previous operation completed. Any instance members are not guaranteed to be thread safe.");
 				}
 
 				if(this.serviceScope != null)
@@ -66,7 +67,6 @@ namespace MadEyeMatt.MongoDB.DbContext
 					this.initializing = true;
 
 					MongoDbContextOptionsBuilder optionsBuilder = new MongoDbContextOptionsBuilder(this.options);
-
 					this.OnConfiguring(optionsBuilder);
 
 					this.serviceScope = ServiceProviderCache.Instance.GetOrAdd(optionsBuilder.Options)
@@ -83,26 +83,56 @@ namespace MadEyeMatt.MongoDB.DbContext
 		}
 
 		/// <summary>
+		///		Gets the client associated with this context.
+		/// </summary>
+		public IMongoClient Client => this.InternalServiceProvider.GetRequiredService<IMongoClient>();
+
+		/// <summary>
+		///		Gets the database associated with this context.
+		/// </summary>
+		public IMongoDatabase Database => this.InternalServiceProvider.GetRequiredService<IMongoDatabase>();
+
+		/// <summary>
+		///		Gets the session instance if one exists, else returns <c>null</c>.
+		/// </summary>
+		public IClientSessionHandle Session { get; private set; }
+
+		/// <summary>
 		///     Gets the collection for the given document type.
 		/// </summary>
 		/// <typeparam name="TDocument">The type representing a document.</typeparam>
 		/// <returns>The collection.</returns>
 		public IMongoCollection<TDocument> GetCollection<TDocument>()
 		{
-			IMongoDatabase database = this.InternalServiceProvider.GetRequiredService<IMongoDatabase>();
-			return database.GetCollection<TDocument>(this.GetCollectionName<TDocument>());
+			return this.Database.GetCollection<TDocument>(this.GetCollectionName<TDocument>());
 		}
 
 		/// <summary>
-		///     Starts a client session.
+		///     Gets the queryable of the collection for the given document type.
+		/// </summary>
+		/// <typeparam name="TDocument">The type representing a document.</typeparam>
+		/// <returns>The queryable of the collection.</returns>
+		public IMongoQueryable<TDocument> GetQueryable<TDocument>()
+		{
+			IMongoCollection<TDocument> collection = this.GetCollection<TDocument>();
+			return collection.AsQueryable();
+		}
+
+		/// <summary>
+		///     Starts a client session and transaction.
 		/// </summary>
 		/// <param name="clientSessionOptions">The session options.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <returns>A client session.</returns>
-		public async Task<IClientSessionHandle> StartSessionAsync(ClientSessionOptions clientSessionOptions = null, CancellationToken cancellationToken = default)
+		public async Task<IClientSessionHandle> StartTransactionAsync(ClientSessionOptions clientSessionOptions = null, CancellationToken cancellationToken = default)
 		{
-			IMongoClient client = this.InternalServiceProvider.GetRequiredService<IMongoClient>();
-			return await client.StartSessionAsync(clientSessionOptions, cancellationToken);
+			if(this.Session is null)
+			{
+				this.Session = await this.Client.StartSessionAsync(clientSessionOptions, cancellationToken);
+				this.Session.StartTransaction();
+			}
+
+			return this.Session;
 		}
 
 		/// <summary>
@@ -149,8 +179,8 @@ namespace MadEyeMatt.MongoDB.DbContext
 		///         <see cref="OnConfiguring(MongoDbContextOptionsBuilder)" />.
 		///     </para>
 		/// </remarks>
-		/// <param name="optionsBuilder">A builder used modify the options for this context.</param>
-		protected internal virtual void OnConfiguring(MongoDbContextOptionsBuilder optionsBuilder)
+		/// <param name="builder">A builder used modify the options for this context.</param>
+		protected internal virtual void OnConfiguring(MongoDbContextOptionsBuilder builder)
 		{
 		}
 	}

@@ -12,12 +12,12 @@
 		/// <summary>
 		///		The connection string for the MongoDB server/replica-set
 		/// </summary>
-		public string ConnectionString { get; set; }
+		public string ConnectionString { get; internal set; }
 
 		/// <summary>
 		///		The name of the database.
 		/// </summary>
-		public string DatabaseName { get; set; }
+		public string DatabaseName { get; internal set; }
 
 		/// <summary>
 		///     The type of context that these options are for.
@@ -74,11 +74,17 @@
 			return hashCode.ToHashCode();
 		}
 
+		/// <summary>
+		///		Checks two instances of <see cref="MongoDbContextOptions"/> for equality.
+		/// </summary>
 		public static bool operator ==(MongoDbContextOptions left, MongoDbContextOptions right)
 		{
 			return Equals(left, right);
 		}
 
+		/// <summary>
+		///		Checks two instances of <see cref="MongoDbContextOptions"/> for inequality.
+		/// </summary>
 		public static bool operator !=(MongoDbContextOptions left, MongoDbContextOptions right)
 		{
 			return !Equals(left, right);
