@@ -31,6 +31,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<InternalsVisibleTo Include="MongoDB.DbContext.UnitTests" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Include="..\..\icon.png" Link="Properties\icon.png">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>

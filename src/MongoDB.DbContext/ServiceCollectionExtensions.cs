@@ -2,6 +2,8 @@
 {
 	using System;
 	using JetBrains.Annotations;
+	using MadEyeMatt.MongoDB.DbContext.Initialization;
+	using MadEyeMatt.MongoDB.DbContext.Serialization;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -12,7 +14,7 @@
 	public static class ServiceCollectionExtensions
 	{
 		/// <summary>
-		///     Registers the given context with optional initial <see cref="MongoDbContextOptions"/>m configured
+		///     Adds the given context with optional initial <see cref="MongoDbContextOptions"/> configured
 		///		using the <see cref="MongoDbContextOptionsBuilder"/>.
 		/// </summary>
 		/// <typeparam name="TContext">The context type to register.</typeparam>
@@ -26,12 +28,41 @@
 			{
 			};
 
+			services.TryAddScoped<TContext>();
 			services.TryAddScoped(serviceProvider => CreateMongoDbContextOptions<TContext>(serviceProvider, (_, builder) => optionsAction.Invoke(builder)));
 			services.TryAddScoped<MongoDbContextOptions>(serviceProvider => serviceProvider.GetRequiredService<MongoDbContextOptions<TContext>>());
 
-			services.TryAddScoped<TContext>();
+			SerializationManager.Initialize();
 
 			return services;
+		}
+
+		/// <summary>
+		///		Adds a singleton schema service. This service will be used when the database is initialized
+		/// </summary>
+		/// <typeparam name="TEnsureSchema">The type of the schema service.</typeparam>
+		/// <param name="services">The service collection.</param>
+		/// <returns>The service collection.</returns>
+		public static IServiceCollection AddEnsureSchema<TEnsureSchema>(this IServiceCollection services) 
+			where TEnsureSchema : class, IEnsureSchema
+		{
+			return services.AddEnsureSchema(typeof(TEnsureSchema));
+		}
+
+		///  <summary>
+		/// 		Adds a singleton schema service. This service will be used when the database is initialized
+		///  </summary>
+		///  <param name="services">The service collection.</param>
+		///  <param name="ensureSchemaImplementationType">The type of the schema service.</param>
+		///  <returns>The service collection.</returns>
+		public static IServiceCollection AddEnsureSchema(this IServiceCollection services, Type ensureSchemaImplementationType)
+		{
+			if(!ensureSchemaImplementationType.IsAssignableTo(typeof(IEnsureSchema)))
+			{
+				throw new InvalidOperationException("The service doesn't implement the IEnsureSchema interface.");
+			}
+
+			return services.AddSingleton(typeof(IEnsureSchema), ensureSchemaImplementationType);
 		}
 
 		private static MongoDbContextOptions<TContext> CreateMongoDbContextOptions<TContext>(

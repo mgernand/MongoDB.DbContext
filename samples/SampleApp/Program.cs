@@ -15,28 +15,23 @@
 			services.AddLogging();
 			services.AddOptions();
 
-			services.AddMongoDbContext<SampleContextOne>(optionsBuilder =>
+			services.AddMongoDbContext<SampleContext>(builder =>
 			{
-				optionsBuilder.UseDatabase("mongodb://localhost:27017", "test1");
-			});
-
-			services.AddMongoDbContext<SampleContextTwo>(optionsBuilder =>
-			{
-				optionsBuilder.UseDatabase("mongodb://localhost:27017", "test2");
+				builder.UseDatabase("mongodb://localhost:27017", "test");
 			});
 
 			IServiceProvider serviceProvider = services.BuildServiceProvider();
 
 			using(IServiceScope serviceScope = serviceProvider.CreateAsyncScope())
 			{
-				SampleContextOne sampleContextOne = serviceScope.ServiceProvider.GetRequiredService<SampleContextOne>();
+				SampleContext sampleContextOne = serviceScope.ServiceProvider.GetRequiredService<SampleContext>();
 				IMongoCollection<User> collection = sampleContextOne.GetCollection<User>();
 
-				await collection.InsertOneAsync(new User(){ Name = "Tester" });
+				await collection.InsertOneAsync(new User
+				{
+					Name = "Tester"
+				});
 			}
-			
-			//SampleContextTwo sampleContextTwo = serviceProvider.GetRequiredService<SampleContextTwo>();
-			//IMongoCollection<User> collectionTwo = sampleContextTwo.GetCollection<User>();
 		}
 	}
 }

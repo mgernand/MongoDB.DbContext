@@ -67,7 +67,6 @@ namespace MadEyeMatt.MongoDB.DbContext
 					this.initializing = true;
 
 					MongoDbContextOptionsBuilder optionsBuilder = new MongoDbContextOptionsBuilder(this.options);
-
 					this.OnConfiguring(optionsBuilder);
 
 					this.serviceScope = ServiceProviderCache.Instance.GetOrAdd(optionsBuilder.Options)
@@ -94,6 +93,11 @@ namespace MadEyeMatt.MongoDB.DbContext
 		public IMongoDatabase Database => this.InternalServiceProvider.GetRequiredService<IMongoDatabase>();
 
 		/// <summary>
+		///		Gets the session instance if one exists, else returns <c>null</c>.
+		/// </summary>
+		public IClientSessionHandle Session { get; private set; }
+
+		/// <summary>
 		///     Gets the collection for the given document type.
 		/// </summary>
 		/// <typeparam name="TDocument">The type representing a document.</typeparam>
@@ -115,14 +119,20 @@ namespace MadEyeMatt.MongoDB.DbContext
 		}
 
 		/// <summary>
-		///     Starts a client session.
+		///     Starts a client session and transaction.
 		/// </summary>
 		/// <param name="clientSessionOptions">The session options.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <returns>A client session.</returns>
-		public async Task<IClientSessionHandle> StartSessionAsync(ClientSessionOptions clientSessionOptions = null, CancellationToken cancellationToken = default)
+		public async Task<IClientSessionHandle> StartTransactionAsync(ClientSessionOptions clientSessionOptions = null, CancellationToken cancellationToken = default)
 		{
-			return await this.Client.StartSessionAsync(clientSessionOptions, cancellationToken);
+			if(this.Session is null)
+			{
+				this.Session = await this.Client.StartSessionAsync(clientSessionOptions, cancellationToken);
+				this.Session.StartTransaction();
+			}
+
+			return this.Session;
 		}
 
 		/// <summary>

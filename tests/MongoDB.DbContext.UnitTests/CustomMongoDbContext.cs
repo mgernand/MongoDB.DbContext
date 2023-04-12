@@ -2,12 +2,12 @@
 {
 	using MadEyeMatt.MongoDB.DbContext;
 
-	public class CustomMongoDbContext : MongoDbContext
+	public sealed class CustomMongoDbContext : MongoDbContext
 	{
 		/// <inheritdoc />
-		protected override void OnConfiguring(MongoDbContextOptionsBuilder builder)
+		protected internal override void OnConfiguring(MongoDbContextOptionsBuilder builder)
 		{
-			if(!builder.IsConfigured)
+			if (!builder.IsConfigured)
 			{
 				builder.UseDatabase(GlobalFixture.ConnectionString, "changed");
 			}
