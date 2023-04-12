@@ -38,7 +38,7 @@
 		}
 
 		/// <summary>
-		///		Adds a singleton schema service. This service will be used when the database is initialized
+		///		Adds a schema service. This service will be used when the database is initialized.
 		/// </summary>
 		/// <typeparam name="TEnsureSchema">The type of the schema service.</typeparam>
 		/// <param name="services">The service collection.</param>
@@ -50,7 +50,7 @@
 		}
 
 		///  <summary>
-		/// 		Adds a singleton schema service. This service will be used when the database is initialized
+		/// 		Adds a schema service. This service will be used when the database is initialized.
 		///  </summary>
 		///  <param name="services">The service collection.</param>
 		///  <param name="ensureSchemaImplementationType">The type of the schema service.</param>
@@ -62,7 +62,7 @@
 				throw new InvalidOperationException("The service doesn't implement the IEnsureSchema interface.");
 			}
 
-			return services.AddSingleton(typeof(IEnsureSchema), ensureSchemaImplementationType);
+			return services.AddScoped(typeof(IEnsureSchema), ensureSchemaImplementationType);
 		}
 
 		private static MongoDbContextOptions<TContext> CreateMongoDbContextOptions<TContext>(
