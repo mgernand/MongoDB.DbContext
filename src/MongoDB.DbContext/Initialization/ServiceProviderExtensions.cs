@@ -17,7 +17,7 @@
 		/// </summary>
 		/// <param name="serviceProvider"></param>
 		/// <returns></returns>
-		public static async Task InitializeMongoDbStores(this IServiceProvider serviceProvider)
+		public static async Task InitializeMongoDB(this IServiceProvider serviceProvider)
 		{
 			IEnumerable<IEnsureSchema> ensureSchemata = serviceProvider.GetServices<IEnsureSchema>();
 			foreach(IEnsureSchema ensureSchema in ensureSchemata)
