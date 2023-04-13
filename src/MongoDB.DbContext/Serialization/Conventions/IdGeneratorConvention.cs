@@ -37,10 +37,6 @@
 					.SetIdGenerator(ObjectIdGenerator.Instance)
 					.SetSerializer(ObjectIdSerializer.Instance);
 			}
-			else
-			{
-				throw new InvalidOperationException("Only supports String, Guid or ObjectId as type for keys.");
-			}
 		}
 	}
 }
