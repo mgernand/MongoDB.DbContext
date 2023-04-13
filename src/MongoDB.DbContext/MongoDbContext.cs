@@ -16,9 +16,12 @@ namespace MadEyeMatt.MongoDB.DbContext
 	[PublicAPI]
 	public class MongoDbContext : IDisposable, IAsyncDisposable
 	{
+		private readonly object lockObject = new object();
+
 		private readonly MongoDbContextOptions options;
 		private bool initializing;
 		private IServiceScope serviceScope;
+		private Task<IClientSessionHandle> sessionTask;
 
 		/// <summary>
 		///     Initializes a new instance of the <see cref="MongoDbContext" /> type.
@@ -124,15 +127,28 @@ namespace MadEyeMatt.MongoDB.DbContext
 		/// <param name="clientSessionOptions">The session options.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
 		/// <returns>A client session.</returns>
-		public async Task<IClientSessionHandle> StartTransactionAsync(ClientSessionOptions clientSessionOptions = null, CancellationToken cancellationToken = default)
+		public Task<IClientSessionHandle> StartSessionAsync(ClientSessionOptions clientSessionOptions = null, CancellationToken cancellationToken = default)
 		{
-			if(this.Session is null)
+			async Task<IClientSessionHandle> Start()
 			{
-				this.Session = await this.Client.StartSessionAsync(clientSessionOptions, cancellationToken);
-				this.Session.StartTransaction();
+				IClientSessionHandle handle = await this.Client.StartSessionAsync(clientSessionOptions, cancellationToken);
+
+				this.Session = handle;
+
+				return handle;
 			}
 
-			return this.Session;
+			lock (this.lockObject)
+			{
+				if (this.sessionTask != null)
+				{
+					return this.sessionTask;
+				}
+
+				this.sessionTask = Start();
+
+				return this.sessionTask;
+			}
 		}
 
 		/// <summary>
