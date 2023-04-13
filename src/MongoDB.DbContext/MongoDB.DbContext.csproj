@@ -14,9 +14,9 @@
 		<RootNamespace>MadEyeMatt.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 		<IncludeSymbols>false</IncludeSymbols>
 		<Copyright>Copyright © 2023 Matthias Gernand. All rights reserved.</Copyright>
-		<Version>7.0.1</Version>
-		<AssemblyVersion>7.0.1</AssemblyVersion>
-		<FileVersion>7.0.1</FileVersion>
+		<Version>7.0.2</Version>
+		<AssemblyVersion>7.0.2</AssemblyVersion>
+		<FileVersion>7.0.2</FileVersion>
 		<Authors>Matthias Gernand</Authors>
 		<Description>A DB context implementation for MongoDB.</Description>
 		<NeutralLanguage>en</NeutralLanguage>
@@ -24,7 +24,7 @@
 		<PackageProjectUrl>https://github.com/mgernand/AspNetCore.Identity.MongoDB</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/mgernand/AspNetCore.Identity.MongoDB</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageTags>aspnetcore;mongodb;identity;membership</PackageTags>
+		<PackageTags>mongodb;entity;database;context;dbcontext</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageIcon>icon.png</PackageIcon>
