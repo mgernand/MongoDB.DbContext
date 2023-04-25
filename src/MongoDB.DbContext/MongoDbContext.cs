@@ -41,7 +41,7 @@ namespace MadEyeMatt.MongoDB.DbContext
 		/// <param name="options">The options for this context.</param>
 		public MongoDbContext(MongoDbContextOptions options)
 		{
-			ArgumentNullException.ThrowIfNull(options);
+			Argument.ThrowIfNull(options);
 
 			if(!options.ContextType.IsAssignableFrom(this.GetType()))
 			{

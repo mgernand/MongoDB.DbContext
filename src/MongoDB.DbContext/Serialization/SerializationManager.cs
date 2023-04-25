@@ -15,8 +15,10 @@
 
 			BsonSerializer.RegisterSerializationProvider(new GuidSerializationProvider());
 			BsonSerializer.RegisterSerializationProvider(new DecimalSerializationProvider());
+#if !NETSTANDARD
 			BsonSerializer.RegisterSerializationProvider(new DateOnlySerializationProvider());
 			BsonSerializer.RegisterSerializationProvider(new TimeOnlySerializationProvider());
+#endif
 			BsonSerializer.RegisterSerializationProvider(new DateTimeSerializationProvider());
 			BsonSerializer.RegisterSerializationProvider(new DateTimeOffsetSerializationProvider());
 			BsonSerializer.RegisterSerializationProvider(new TimeSpanSerializationProvider());

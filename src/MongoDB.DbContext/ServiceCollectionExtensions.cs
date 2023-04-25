@@ -57,7 +57,7 @@
 		///  <returns>The service collection.</returns>
 		public static IServiceCollection AddEnsureSchema(this IServiceCollection services, Type ensureSchemaImplementationType)
 		{
-			if(!ensureSchemaImplementationType.IsAssignableTo(typeof(IEnsureSchema)))
+			if (!typeof(IEnsureSchema).IsAssignableFrom(ensureSchemaImplementationType))
 			{
 				throw new InvalidOperationException("The service doesn't implement the IEnsureSchema interface.");
 			}

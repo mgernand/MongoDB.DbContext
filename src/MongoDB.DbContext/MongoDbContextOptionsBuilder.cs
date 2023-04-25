@@ -58,7 +58,7 @@
 		/// <param name="options">The options to be configured.</param>
 		public MongoDbContextOptionsBuilder(MongoDbContextOptions options)
 		{
-			ArgumentNullException.ThrowIfNull(options);
+			Argument.ThrowIfNull(options);
 
 			this.options = options;
 		}

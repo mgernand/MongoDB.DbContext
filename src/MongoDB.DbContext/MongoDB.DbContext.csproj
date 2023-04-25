@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFrameworks>netstandard2.1;net6.0;net7.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<Nullable>disable</Nullable>
 		<ImplicitUsings>disable</ImplicitUsings>
@@ -14,9 +14,9 @@
 		<RootNamespace>MadEyeMatt.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 		<IncludeSymbols>false</IncludeSymbols>
 		<Copyright>Copyright © 2023 Matthias Gernand. All rights reserved.</Copyright>
-		<Version>7.1.0</Version>
-		<AssemblyVersion>7.1.0</AssemblyVersion>
-		<FileVersion>7.1.0</FileVersion>
+		<Version>7.2.0</Version>
+		<AssemblyVersion>7.2.0</AssemblyVersion>
+		<FileVersion>7.2.0</FileVersion>
 		<Authors>Matthias Gernand</Authors>
 		<Description>A DB context implementation for MongoDB.</Description>
 		<NeutralLanguage>en</NeutralLanguage>
