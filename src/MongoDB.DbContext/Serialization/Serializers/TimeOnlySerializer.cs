@@ -1,4 +1,5 @@
-﻿namespace MadEyeMatt.MongoDB.DbContext.Serialization.Serializers
+﻿#if !NETSTANDARD
+namespace MadEyeMatt.MongoDB.DbContext.Serialization.Serializers
 {
 	using System;
 	using global::MongoDB.Bson.Serialization;
@@ -27,3 +28,4 @@
 		}
 	}
 }
+#endif
