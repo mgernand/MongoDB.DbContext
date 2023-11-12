@@ -3,14 +3,13 @@
 	using MadEyeMatt.MongoDB.DbContext;
 	using Microsoft.Extensions.DependencyInjection;
 	using NUnit.Framework;
-	using System;
 	using System.Reflection;
 	using FluentAssertions;
 
 	[TestFixture]
 	public class BasicContextConfigurationTests
 	{
-		private IServiceProvider serviceProvider;
+		private ServiceProvider serviceProvider;
 
 		[OneTimeSetUp]
 		public void OneTimeSetUp()
@@ -22,6 +21,12 @@
 			});
 
 			this.serviceProvider = services.BuildServiceProvider();
+		}
+
+		[OneTimeTearDown]
+		public void OneTimeTearDown()
+		{
+			this.serviceProvider?.Dispose();
 		}
 
 		[Test]
