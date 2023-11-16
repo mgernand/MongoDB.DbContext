@@ -21,8 +21,8 @@
 		<Description>A DB context implementation for MongoDB.</Description>
 		<NeutralLanguage>en</NeutralLanguage>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<PackageProjectUrl>https://github.com/mgernand/AspNetCore.Identity.MongoDB</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/mgernand/AspNetCore.Identity.MongoDB</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/mgernand/MongoDB.DbContext</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/mgernand/MongoDB.DbContext</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>mongodb;entity;database;context;dbcontext</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
