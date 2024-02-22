@@ -21,7 +21,10 @@
 		{
 			if(!builder.IsConfigured)
 			{
-				builder.UseDatabase("mongodb://localhost:27017", "test");
+				builder
+					.UseDatabase("mongodb://localhost:27017", "test")
+					.EnableTelemetry()
+					.CaptureCommandText();
 			}
 		}
 	}

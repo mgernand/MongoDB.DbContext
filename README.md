@@ -32,7 +32,6 @@ services.AddMongoDbContext<MongoDbContext>(builder =>
 });
 ```
 
-
 ### Configuration with custom context class
 
 If you need more control ove the context configuration or need to add multiple different
@@ -99,16 +98,24 @@ public sealed class SampleContextTwo : MongoDbContext
 }
 ```
 
-## TODO
+### Configuring telemetry information
 
-- [ ] Build a nice fluent API for defining MongoDB driver conventions for document types and single properties.
-  - [ ] Document mappings ID, ignore, ...)
-  - [ ] Collection names
-  - [ ] Property names
-  - [ ] Property serializers
-- [ ] Try to find a way to store singletin instances of ```IMongoCollection<T>``` in the internal service provider.
-- [ ] Initialize existing collection properties automatically when they are there.
+To expose telemetry information via ```System.Diagnostics``` just enable it in the ```MongoDbContextOptions```.
+If you like to integrate this telemetry into OpenTelemetry just add a source with the name
+```MongoDB.Driver.Core.Extensions.DiagnosticSources```.
+
+```C#
+services.AddMongoDbContext<SampleContext>(builder =>
+{
+	builder
+		.UseDatabase("mongodb://localhost:27017", "test")
+		.EnableTelemetry();
+});
+```
+
 
 ## References
 
 [EntityFramework Core](https://github.com/dotnet/efcore)
+
+[MongoDB.Driver.Core.Extensions.DiagnosticSources](https://github.com/jbogard/MongoDB.Driver.Core.Extensions.DiagnosticSources)

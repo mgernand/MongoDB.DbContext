@@ -17,7 +17,9 @@
 
 			services.AddMongoDbContext<SampleContext>(builder =>
 			{
-				builder.UseDatabase("mongodb://localhost:27017", "test");
+				builder
+					.UseDatabase("mongodb://localhost:27017", "test")
+					.EnableTelemetry();
 			});
 
 			IServiceProvider serviceProvider = services.BuildServiceProvider();
@@ -31,6 +33,9 @@
 				{
 					Name = "Tester"
 				});
+
+				User user = await collection.Find(x => x.Name == "Tester").FirstOrDefaultAsync();
+				Console.WriteLine($"ID = {user.Id}, Name = {user.Name}, TenantID = {user.TenantId}");
 			}
 
 			Console.WriteLine("Press any key to quit...");

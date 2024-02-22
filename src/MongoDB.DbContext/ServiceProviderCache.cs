@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Concurrent;
 	using global::MongoDB.Driver;
+	using global::MongoDB.Driver.Core.Extensions.DiagnosticSources;
 	using Microsoft.Extensions.DependencyInjection;
 
 	/// <summary>
@@ -28,7 +29,27 @@
 				ValidateContextOptions(contextOptions);
 
 				// Add the MongoDB services for this context internal service provider.
-				services.AddSingleton<IMongoClient>(_ => new MongoClient(contextOptions.ConnectionString));
+				services.AddSingleton<IMongoClient>(_ =>
+				{
+					MongoClientSettings clientSettings = MongoClientSettings.FromConnectionString(contextOptions.ConnectionString);
+
+					// https://github.com/jbogard/MongoDB.Driver.Core.Extensions.DiagnosticSources
+					if (contextOptions.EnableTelemetry)
+					{
+						InstrumentationOptions instrumentationOptions = new InstrumentationOptions
+						{
+							CaptureCommandText = contextOptions.CaptureCommandText,
+							//ShouldStartActivity = @event => !"collectionToIgnore".Equals(@event.GetCollectionName())
+						};
+
+						clientSettings.ClusterConfigurator = builder =>
+						{
+							builder.Subscribe(new DiagnosticsActivityEventSubscriber(instrumentationOptions));
+						};
+					}
+
+					return new MongoClient(clientSettings);
+				});
 				services.AddSingleton(serviceProvider =>
 				{
 					IMongoClient client = serviceProvider.GetRequiredService<IMongoClient>();

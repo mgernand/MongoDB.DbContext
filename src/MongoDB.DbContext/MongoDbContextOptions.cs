@@ -20,6 +20,16 @@
 		public string DatabaseName { get; internal set; }
 
 		/// <summary>
+		///		Flag, indicating if the telemetry/diagnostics are enabled. 
+		/// </summary>
+		public bool EnableTelemetry { get; internal set; }
+
+		/// <summary>
+		///		Flag, indicating if the command text will be part if the diagnostics/telemetry activity.
+		/// </summary>
+		public bool CaptureCommandText { get; internal set; }
+
+		/// <summary>
 		///     The type of context that these options are for.
 		/// </summary>
 		public abstract Type ContextType { get; }
@@ -61,7 +71,7 @@
 				return false;
 			}
 
-			return Equals((MongoDbContextOptions)obj);
+			return this.Equals((MongoDbContextOptions)obj);
 		}
 
 		/// <inheritdoc />
@@ -101,7 +111,7 @@
 		/// <summary>
 		///     Initializes a new instance of the <see cref="MongoDbContextOptions{TContext}" /> class. You normally override
 		///     <see cref="MongoDbContext.OnConfiguring(MongoDbContextOptionsBuilder)" /> or use a <see cref="MongoDbContextOptionsBuilder{TContext}" />
-		///     to create instances of this class and it is not designed to be directly constructed in your application code.
+		///     to create instances of this class, it is not designed to be directly constructed in your application code.
 		/// </summary>
 		public MongoDbContextOptions()
 		{
