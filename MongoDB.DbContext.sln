@@ -11,16 +11,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".items", ".items", "{241433
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EDEC7D8F-4C6F-4DE3-8022-17A2A23AB18B}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{24F9EFE8-010B-48D9-B5D2-EF194BDEAC31}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9BE8804F-BCC0-48CF-9AEC-ED97414B0C78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDB.DbContext", "src\MongoDB.DbContext\MongoDB.DbContext.csproj", "{CFCF94DC-8C41-4415-8245-8DF69027EEC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoDB.DbContext", "src\MongoDB.DbContext\MongoDB.DbContext.csproj", "{CFCF94DC-8C41-4415-8245-8DF69027EEC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "samples\SampleApp\SampleApp.csproj", "{A5844FF1-7F95-4435-BDDB-E376DBD43B8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp", "samples\SampleApp\SampleApp.csproj", "{A5844FF1-7F95-4435-BDDB-E376DBD43B8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDB.DbContext.UnitTests", "tests\MongoDB.DbContext.UnitTests\MongoDB.DbContext.UnitTests.csproj", "{53B3C715-4048-4822-84BA-22D039C05601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoDB.DbContext.UnitTests", "tests\MongoDB.DbContext.UnitTests\MongoDB.DbContext.UnitTests.csproj", "{53B3C715-4048-4822-84BA-22D039C05601}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
