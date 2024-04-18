@@ -23,7 +23,7 @@
 		<PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
-		<PackageReference Include="MongoDB.Driver" Version="2.24.0" />
+		<PackageReference Include="MongoDB.Driver" Version="2.25.0" />
 		<PackageReference Include="MongoDB.Driver.Core.Extensions.DiagnosticSources" Version="1.4.0" />
 	</ItemGroup>
 
