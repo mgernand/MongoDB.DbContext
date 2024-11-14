@@ -9,7 +9,7 @@
 	internal sealed class GuidSerializationProvider : IBsonSerializationProvider
 	{
 		private static readonly GuidSerializer Serializer = new GuidSerializer(GuidRepresentation.Standard);
-		private static readonly NullableSerializer<Guid> NullableSerializer = new NullableSerializer<Guid>(new GuidSerializer(GuidRepresentation.Standard));
+		private static readonly NullableSerializer<Guid> NullableSerializer = new NullableSerializer<Guid>(Serializer);
 
 		/// <inheritdoc />
 		public IBsonSerializer GetSerializer(Type type)

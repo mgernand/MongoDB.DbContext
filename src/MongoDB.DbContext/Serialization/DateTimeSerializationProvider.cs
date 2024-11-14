@@ -9,7 +9,7 @@
 	internal sealed class DateTimeSerializationProvider : IBsonSerializationProvider
 	{
 		private static readonly DateTimeSerializer Serializer = DateTimeSerializer.UtcInstance.WithRepresentation(BsonType.Document);
-		private static readonly NullableSerializer<DateTime> NullableSerializer = new NullableSerializer<DateTime>(DateTimeSerializer.UtcInstance.WithRepresentation(BsonType.Document));
+		private static readonly NullableSerializer<DateTime> NullableSerializer = new NullableSerializer<DateTime>(Serializer);
 
 		/// <inheritdoc />
 		public IBsonSerializer GetSerializer(Type type)

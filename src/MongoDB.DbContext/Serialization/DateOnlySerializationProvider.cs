@@ -1,5 +1,4 @@
-﻿#if !NETSTANDARD
-namespace MadEyeMatt.MongoDB.DbContext.Serialization
+﻿namespace MadEyeMatt.MongoDB.DbContext.Serialization
 {
 	using System;
 	using global::MongoDB.Bson.Serialization;
@@ -9,8 +8,8 @@ namespace MadEyeMatt.MongoDB.DbContext.Serialization
 	/// <inheritdoc />
 	internal sealed class DateOnlySerializationProvider : IBsonSerializationProvider
 	{
-		private static readonly DateOnlySerializer Serializer = new DateOnlySerializer();
-		private static readonly NullableSerializer<DateOnly> NullableSerializer = new NullableSerializer<DateOnly>(new DateOnlySerializer());
+		private static readonly CustomDateOnlySerializer Serializer = new CustomDateOnlySerializer();
+		private static readonly NullableSerializer<DateOnly> NullableSerializer = new NullableSerializer<DateOnly>(Serializer);
 
 		/// <inheritdoc />
 		public IBsonSerializer GetSerializer(Type type)
@@ -30,4 +29,3 @@ namespace MadEyeMatt.MongoDB.DbContext.Serialization
 		}
 	}
 }
-#endif

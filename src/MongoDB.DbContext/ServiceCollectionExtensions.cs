@@ -24,9 +24,7 @@
 		public static IServiceCollection AddMongoDbContext<TContext>(this IServiceCollection services, Action<MongoDbContextOptionsBuilder> optionsAction = null)
 			where TContext : MongoDbContext
 		{
-			optionsAction ??= _ =>
-			{
-			};
+			optionsAction ??= _ => { };
 
 			services.TryAddScoped<TContext>();
 			services.TryAddScoped(serviceProvider => CreateMongoDbContextOptions<TContext>(serviceProvider, (_, builder) => optionsAction.Invoke(builder)));

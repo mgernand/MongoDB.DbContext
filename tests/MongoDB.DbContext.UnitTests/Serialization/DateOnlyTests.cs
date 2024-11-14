@@ -14,7 +14,7 @@ namespace MongoDB.DbContext.UnitTests.Serialization
 		[OneTimeSetUp]
 		public void OneTimeSetUp()
 		{
-			BsonSerializer.RegisterSerializer(new DateOnlySerializer());
+			BsonSerializer.RegisterSerializer(new CustomDateOnlySerializer());
 		}
 
 		private class TestClass
