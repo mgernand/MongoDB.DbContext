@@ -9,27 +9,21 @@
 	{
 		static SerializationManager()
 		{
-#pragma warning disable CS0618
-			BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
-#pragma warning restore CS0618
-
 			BsonSerializer.RegisterSerializationProvider(new GuidSerializationProvider());
 			BsonSerializer.RegisterSerializationProvider(new DecimalSerializationProvider());
-#if !NETSTANDARD
 			BsonSerializer.RegisterSerializationProvider(new DateOnlySerializationProvider());
 			BsonSerializer.RegisterSerializationProvider(new TimeOnlySerializationProvider());
-#endif
 			BsonSerializer.RegisterSerializationProvider(new DateTimeSerializationProvider());
 			BsonSerializer.RegisterSerializationProvider(new DateTimeOffsetSerializationProvider());
 			BsonSerializer.RegisterSerializationProvider(new TimeSpanSerializationProvider());
 
-			ConventionPack conventionPack = new ConventionPack
-			{
+			ConventionPack conventionPack =
+			[
 				new NamedIdMemberConvention("ID", "Id", "id", "_id"),
 				new IdGeneratorConvention(),
 				new CamelCaseElementNameConvention(),
 				new EnumRepresentationConvention(BsonType.String)
-			};
+			];
 
 			// Register the default convention for every document type.
 			ConventionRegistry.Register("DefaultConventions", conventionPack, _ => true);

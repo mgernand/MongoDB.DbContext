@@ -1,5 +1,4 @@
-﻿#if !NETSTANDARD
-namespace MadEyeMatt.MongoDB.DbContext.Serialization.Serializers
+﻿namespace MadEyeMatt.MongoDB.DbContext.Serialization.Serializers
 {
 	using System;
 	using global::MongoDB.Bson.Serialization;
@@ -10,14 +9,15 @@ namespace MadEyeMatt.MongoDB.DbContext.Serialization.Serializers
 	///     A serializer for the <see cref="TimeOnly" /> type.
 	/// </summary>
 	[PublicAPI]
-	public class TimeOnlySerializer : StructSerializerBase<TimeOnly>
+	public class CustomTimeOnlySerializer : StructSerializerBase<TimeOnly>
 	{
 		private readonly TimeSpanSerializer timeSpanSerializer = new TimeSpanSerializer();
 
 		/// <inheritdoc />
 		public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, TimeOnly value)
 		{
-			this.timeSpanSerializer.Serialize(context, args, value.ToTimeSpan());
+			TimeSpan timeSpanValue = value.ToTimeSpan();
+			this.timeSpanSerializer.Serialize(context, args, timeSpanValue);
 		}
 
 		/// <inheritdoc />
@@ -28,4 +28,3 @@ namespace MadEyeMatt.MongoDB.DbContext.Serialization.Serializers
 		}
 	}
 }
-#endif

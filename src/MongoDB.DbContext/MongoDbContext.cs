@@ -3,10 +3,10 @@
 namespace MadEyeMatt.MongoDB.DbContext
 {
 	using System;
+	using System.Linq;
 	using System.Threading;
 	using System.Threading.Tasks;
 	using global::MongoDB.Driver;
-	using global::MongoDB.Driver.Linq;
 	using JetBrains.Annotations;
 	using Microsoft.Extensions.DependencyInjection;
 
@@ -115,7 +115,7 @@ namespace MadEyeMatt.MongoDB.DbContext
 		/// </summary>
 		/// <typeparam name="TDocument">The type representing a document.</typeparam>
 		/// <returns>The queryable of the collection.</returns>
-		public IMongoQueryable<TDocument> GetQueryable<TDocument>()
+		public IQueryable<TDocument> GetQueryable<TDocument>()
 		{
 			IMongoCollection<TDocument> collection = this.GetCollection<TDocument>();
 			return collection.AsQueryable();

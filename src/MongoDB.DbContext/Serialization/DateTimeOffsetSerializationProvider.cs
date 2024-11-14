@@ -9,7 +9,7 @@
 	internal sealed class DateTimeOffsetSerializationProvider : IBsonSerializationProvider
 	{
 		private static readonly DateTimeOffsetSerializer Serializer = new DateTimeOffsetSerializer(BsonType.Document);
-		private static readonly NullableSerializer<DateTimeOffset> NullableSerializer = new NullableSerializer<DateTimeOffset>(new DateTimeOffsetSerializer(BsonType.Document));
+		private static readonly NullableSerializer<DateTimeOffset> NullableSerializer = new NullableSerializer<DateTimeOffset>(Serializer);
 
 		/// <inheritdoc />
 		public IBsonSerializer GetSerializer(Type type)

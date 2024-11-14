@@ -8,7 +8,7 @@
 	internal sealed class TimeSpanSerializationProvider : IBsonSerializationProvider
 	{
 		private static readonly TimeSpanSerializer Serializer = new TimeSpanSerializer();
-		private static readonly NullableSerializer<TimeSpan> NullableSerializer = new NullableSerializer<TimeSpan>(new TimeSpanSerializer());
+		private static readonly NullableSerializer<TimeSpan> NullableSerializer = new NullableSerializer<TimeSpan>(Serializer);
 
 		/// <inheritdoc />
 		public IBsonSerializer GetSerializer(Type type)

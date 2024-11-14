@@ -9,7 +9,7 @@
 	internal sealed class DecimalSerializationProvider : IBsonSerializationProvider
 	{
 		private static readonly DecimalSerializer Serializer = new DecimalSerializer(BsonType.Decimal128);
-		private static readonly NullableSerializer<decimal> NullableSerializer = new NullableSerializer<decimal>(new DecimalSerializer(BsonType.Decimal128));
+		private static readonly NullableSerializer<decimal> NullableSerializer = new NullableSerializer<decimal>(Serializer);
 
 		/// <inheritdoc />
 		public IBsonSerializer GetSerializer(Type type)

@@ -1,5 +1,4 @@
-﻿#if !NETSTANDARD
-namespace MadEyeMatt.MongoDB.DbContext.Serialization.Serializers
+﻿namespace MadEyeMatt.MongoDB.DbContext.Serialization.Serializers
 {
 	using System;
 	using global::MongoDB.Bson.Serialization;
@@ -10,7 +9,7 @@ namespace MadEyeMatt.MongoDB.DbContext.Serialization.Serializers
 	///     A serializer for the <see cref="DateOnly" /> type.
 	/// </summary>
 	[PublicAPI]
-	public class DateOnlySerializer : StructSerializerBase<DateOnly>
+	public class CustomDateOnlySerializer : StructSerializerBase<DateOnly>
 	{
 		/// <inheritdoc />
 		public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, DateOnly value)
@@ -21,8 +20,8 @@ namespace MadEyeMatt.MongoDB.DbContext.Serialization.Serializers
 		/// <inheritdoc />
 		public override DateOnly Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
 		{
-			return DateOnly.ParseExact(context.Reader.ReadString(), "yyyy-MM-dd", null);
+			string dateString = context.Reader.ReadString();
+			return DateOnly.ParseExact(dateString, "yyyy-MM-dd", null);
 		}
 	}
 }
-#endif
