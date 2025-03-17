@@ -14,6 +14,8 @@ uses the conenction string, str database name and the context options type as ke
 database name for a context at runtime (by overriding ```OnConfiguring```) will result in a new internal
 service provider with the corresponding MongoDB singleton services.
 
+## This repository was moved to https://codeberg.org/mgernand/MongoDB.DbContext
+
 ## Usage
 
 To add a ```MongoDbContext``` one uses the ```AddMongoDbContext``` extension method. There
